@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 })
 
 export class PeriodicTableComponent {
+  private searchDebounceTimer: any;
   searchQuery = signal<string>('');
   modalTitle = 'Edit';
   elements = elementsSignal;
@@ -27,17 +28,20 @@ export class PeriodicTableComponent {
   editingRowData: PeriodicElement = { position: 0, name: '', weight: 0, symbol: '' };
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
   filteredElements = computed(() => {
-    const sq = this.searchQuery();
+    const sq = this.searchQuery().toLocaleLowerCase();
     return this.elements().filter(x =>
-      x.name.toLowerCase().includes(sq.toLowerCase()) ||
-      x.symbol.toLowerCase().includes(sq.toLowerCase()) ||
-      x.position.toString().includes(sq.toLowerCase()) ||
-      x.weight.toString().includes(sq.toLowerCase()) 
+      x.name.toLowerCase().includes(sq) ||
+      x.symbol.toLowerCase().includes(sq) ||
+      x.position.toString().includes(sq) ||
+      x.weight.toString().includes(sq)
     );
   });
 
   onSearchUpdated(sq: string) {
-    this.searchQuery.set(sq);
+    clearTimeout(this.searchDebounceTimer);
+    this.searchDebounceTimer = setTimeout(() => {
+      this.searchQuery.set(sq);
+    }, 2000);
   }
 
   openModal(element: PeriodicElement) {
