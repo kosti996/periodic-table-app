@@ -27,16 +27,16 @@
             </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="['position', 'name', 'weight', 'symbol', 'actions']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['position', 'name', 'weight', 'symbol', 'actions'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
 </div>
 
-<modal-window
-    [title]="modalTitle"
-    [open]="modalOpen"
-    [rowData]="editingRowData"
+<modal-window 
+    [title]="modalTitle" 
+    [open]="modalOpen" 
+    [rowData]="editingRowData" 
     (save)="saveModal($event)"
     (cancel)="closeModal()">
 </modal-window>

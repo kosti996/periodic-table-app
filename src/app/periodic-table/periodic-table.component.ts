@@ -1,15 +1,16 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Signal, computed } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { elementsSignal } from '../store/periodic-elements.store';
 import { CommonModule } from '@angular/common';
 import { PeriodicElement } from '../models/periodic-element.model';
 import { ModalWindowComponent } from '../shared/modal-window/modal-window.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'periodic-table',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, CommonModule, ModalWindowComponent],
+  imports: [MatTableModule, MatButtonModule, CommonModule, ModalWindowComponent, FormsModule],
   templateUrl: './periodic-table.component.html',
   styleUrl: './periodic-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -21,6 +22,7 @@ export class PeriodicTableComponent {
   modalOpen: boolean = false;
   editingRowIndex: number | null = null;
   editingRowData: PeriodicElement = { position: 0, name: '', weight: 0, symbol: '' };
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
 
   openModal(element: any) {
     const index = this.elements().findIndex(e => e.position === element.position);
