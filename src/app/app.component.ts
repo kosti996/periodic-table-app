@@ -5,7 +5,7 @@ import { PeriodicTableComponent } from "./periodic-table/periodic-table.componen
   selector: 'app-root',
   imports: [PeriodicTableComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.less'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'periodic-table-app';
