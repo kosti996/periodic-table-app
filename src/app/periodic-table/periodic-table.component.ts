@@ -22,7 +22,7 @@ export class PeriodicTableComponent {
   editingRowIndex: number | null = null;
   editingRowData: PeriodicElement = { position: 0, name: '', weight: 0, symbol: '' };
 
-  openEditModal(element: any) {
+  openModal(element: any) {
     const index = this.elements().findIndex(e => e.position === element.position);
     this.editingRowIndex = index;
     this.editingRowData = { ...element };
@@ -35,7 +35,7 @@ export class PeriodicTableComponent {
     this.editingRowData = { position: 0, name: '', weight: 0, symbol: '' };
   }
 
-  saveModalEdit(edited: PeriodicElement) {
+  saveModal(edited: PeriodicElement) {
     if (this.editingRowIndex !== null) {
       const updated = [...this.elements()];
       updated[this.editingRowIndex] = { ...edited };
