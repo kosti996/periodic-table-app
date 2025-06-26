@@ -1,0 +1,40 @@
+<div class="modal-backdrop" *ngIf="open">
+    <div class="modal">
+        <h2>{{title}}</h2>
+        <form #editForm="ngForm" (ngSubmit)="onSave(editForm)" class="modal-form">
+            <mat-form-field class="modal-field">
+                <mat-label>Element No.</mat-label>
+                <input matInput [(ngModel)]="rowData.position" name="position" #positionModel="ngModel" required />
+                <mat-error *ngIf="positionModel.invalid && (positionModel.touched || positionModel.dirty)">
+                    {{ errorMessage('position', positionModel) }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="modal-field">
+                <mat-label>Name:</mat-label>
+                <input matInput [(ngModel)]="rowData.name" name="name" #nameModel="ngModel" required />
+                <mat-error *ngIf="nameModel.invalid && (nameModel.touched || nameModel.dirty)">
+                    {{ errorMessage('name', nameModel) }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="modal-field">
+                <mat-label>Weight:</mat-label>
+                <input matInput [(ngModel)]="rowData.weight" name="weight" #wieghtModel="ngModel" required type="number"
+                    step="any" />
+                <mat-error *ngIf="wieghtModel.invalid && (wieghtModel.touched || wieghtModel.dirty)">
+                    {{ errorMessage('weight', wieghtModel) }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="modal-field">
+                <mat-label>Symbol:</mat-label>
+                <input matInput [(ngModel)]="rowData.symbol" name="symbol" #symbolModel="ngModel" required />
+                <mat-error *ngIf="symbolModel.invalid && (symbolModel.touched || symbolModel.dirty)">
+                    {{ errorMessage('symbol', symbolModel) }}
+                </mat-error>
+            </mat-form-field>
+            <div class="modal-actions">
+                <button matButton type="submit">Save</button>
+                <button matButton type="button" (click)="onCancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
