@@ -1,5 +1,11 @@
 <div class="table-container">
-    <table mat-table [dataSource]="elements()" [trackBy]="trackByFn">
+    <h1>Periodic Table</h1>
+
+    <mat-form-field class="table-filter">
+        <input matInput #searchQuery type="text" (input)="onSearchUpdated(searchQuery.value)" placeholder="Filter" />
+    </mat-form-field>
+
+    <table mat-table [dataSource]="filteredElements()" [trackBy]="trackByFn">
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef> No. </th>
             <td mat-cell *matCellDef="let element"> {{element.position}} </td>
@@ -33,10 +39,6 @@
     </table>
 </div>
 
-<modal-window 
-    [title]="modalTitle" 
-    [open]="modalOpen" 
-    [rowData]="editingRowData" 
-    (save)="saveModal($event)"
+<modal-window [title]="modalTitle" [open]="modalOpen" [rowData]="editingRowData" (save)="saveModal($event)"
     (cancel)="closeModal()">
 </modal-window>
