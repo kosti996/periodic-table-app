@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Signal, computed, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, signal } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { elementsSignal } from '../store/periodic-elements.store';
@@ -40,7 +40,7 @@ export class PeriodicTableComponent {
     this.searchQuery.set(sq);
   }
 
-  openModal(element: any) {
+  openModal(element: PeriodicElement) {
     const index = this.elements().findIndex(e => e.position === element.position);
     this.editingRowIndex = index;
     this.editingRowData = { ...element };
