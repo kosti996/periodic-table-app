@@ -1,13 +1,13 @@
-import { Component, ChangeDetectionStrategy, computed, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, signal, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { elementsSignal } from '../store/periodic-elements.store';
 import { CommonModule } from '@angular/common';
 import { PeriodicElement } from '../models/periodic-element.model';
 import { ModalWindowComponent } from '../shared/modal-window/modal-window.component';
 import { FormsModule } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ElementsService } from '../shared/services/elements.service';
 
 @Component({
   selector: 'periodic-table',
@@ -18,11 +18,11 @@ import { MatInputModule } from '@angular/material/input';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class PeriodicTableComponent {
+export class PeriodicTableComponent implements OnInit {
   private searchDebounceTimer: any;
   searchQuery = signal<string>('');
   modalTitle = 'Edit';
-  elements = elementsSignal;
+  elements = signal<PeriodicElement[]>([]);
   modalOpen: boolean = false;
   editingRowIndex: number | null = null;
   editingRowData: PeriodicElement = { position: 0, name: '', weight: 0, symbol: '' };
@@ -36,6 +36,12 @@ export class PeriodicTableComponent {
       x.weight.toString().includes(sq)
     );
   });
+
+  constructor(private elementsService: ElementsService) { }
+
+  ngOnInit() {
+    this.elementsService.getElements().subscribe((data: PeriodicElement[]) => this.elements.set(data));
+  }
 
   onSearchUpdated(sq: string) {
     clearTimeout(this.searchDebounceTimer);
